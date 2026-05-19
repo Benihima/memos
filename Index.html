@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Мои памятки</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .ticket-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .ticket-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .ticket-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .ticket-subtitle {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .section-buttons {
+            display: grid;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .section-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        
+        .section-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .back-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            transition: opacity 0.3s;
+        }
+        
+        .main-menu {
+            display: block;
+        }
+        
+        .main-menu.hide {
+            display: none;
+        }
+        
+        .memo-content {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .memo-content.show {
+            display: block;
+        }
+        
+        #sectionContent {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 15px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Мои памятки</h1>
+            <p>Выбери билет для повторения</p>
+        </div>
+        
+        <!-- Главное меню -->
+        <div id="mainMenu" class="main-menu">
+            <div class="ticket-card" onclick="showTicket(1)">
+                <div class="ticket-title">🎫 Билет №1</div>
+                <div class="ticket-subtitle">Россия в начале ХХ века</div>
+            </div>
+            
+            <div class="ticket-card" onclick="showTicket(2)">
+                <div class="ticket-title">🎫 Билет №2</div>
+                <div class="ticket-subtitle">Скоро будет добавлен</div>
+            </div>
+            
+            <div class="ticket-card" onclick="showTicket(3)">
+                <div class="ticket-title">🎫 Билет №3</div>
+                <div class="ticket-subtitle">Скоро будет добавлен</div>
+            </div>
+        </div>
+        
+        <!-- Контент будет появляться здесь -->
+        <div id="content"></div>
+    </div>
+    
+    <script>
+        // Памятки для билета 1
+        const memo1Features = `📖 ОСОБЕННОСТИ РАЗВИТИЯ РОССИИ
+
+🏭 Экономика:
+• Топ-5 по темпам промышленного роста
+• Появление монополий (синдикаты)
+• Иностранные инвестиции (Франция, Англия)
+• Госсобственность на заводы и Транссиб
+
+👑 Политика:
+• Николай II - абсолютная власть
+• Парламента нет до 1905 года
+• Партии и профсоюзы запрещены
+
+🌾 Сельское хозяйство:
+• 80% крестьян в общине
+• Низкая урожайность, голоды
+
+👥 Социальная структура:
+• Дворянство (менее 1%)
+• Рабочие и крестьяне внизу
+• Почти нет среднего класса
+
+💡 Главный вывод: экономически развитая страна, но политически - средневековье`;
+
+        const memo1Events = `📅 ОСНОВНЫЕ СОБЫТИЯ
+
+• 1904-1905 - Русско-японская война
+• 9 янв 1905 - "Кровавое воскресенье"
+• 1905-1907 - Первая революция
+• 17 окт 1905 - Манифест (Госдума)
+• 1906 - Столыпинская реформа
+• 1914 - Вступление в Первую мировую
+
+⭐ Важно: события привели к кризису самодержавия`;
+
+        const memo1Meaning = `🌍 ЗНАЧЕНИЕ РОССИИ
+
+• Территория: 1/6 часть суши
+• Население: 3-е место в мире
+• Экономика: 5-е место в мире
+• Роль: член Антанты
+• Культура: балет, Толстой, Достоевский
+• Наука: Менделеев, Павлов, Мечников
+
+🎯 Россия - ключевой игрок, но уступала Западу`;
+        
+        function showTicket(num) {
+            if (num === 1) {
+                showTicket1();
+            } else {
+                alert(`Билет ${num} пока в разработке. Скоро появится!`);
+            }
+        }
+        
+        function showTicket1() {
+            const mainMenu = document.getElementById('mainMenu');
+            const content = document.getElementById('content');
+            
+            mainMenu.classList.add('hide');
+            
+            content.innerHTML = `
+                <div class="memo-content show">
+                    <div class="ticket-title" style="margin-bottom: 15px;">📚 Билет №1: Россия в начале ХХ века</div>
+                    
+                    <div class="section-buttons">
+                        <button class="section-btn" onclick="showSection('features')">📈 Особенности развития</button>
+                        <button class="section-btn" onclick="showSection('events')">📅 Основные события</button>
+                        <button class="section-btn" onclick="showSection('meaning')">🌏 Значение России</button>
+                    </div>
+                    
+                    <div id="sectionContent">
+                        👆 Выбери раздел выше
+                    </div>
+                    
+                    <button class="back-button" onclick="backToMenu()">🔙 Назад к билетам</button>
+                </div>
+            `;
+        }
+        
+        function showSection(section) {
+            const sectionContent = document.getElementById('sectionContent');
+            
+            if (section === 'features') {
+                sectionContent.innerHTML = memo1Features.replace(/\n/g, '<br>');
+            } else if (section === 'events') {
+                sectionContent.innerHTML = memo1Events.replace(/\n/g, '<br>');
+            } else if (section === 'meaning') {
+                sectionContent.innerHTML = memo1Meaning.replace(/\n/g, '<br>');
+            }
+        }
+        
+        function backToMenu() {
+            const mainMenu = document.getElementById('mainMenu');
+            const content = document.getElementById('content');
+            
+            mainMenu.classList.remove('hide');
+            content.innerHTML = '';
+        }
+    </script>
+</body>
+</html>
